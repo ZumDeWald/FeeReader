@@ -42,8 +42,15 @@ $(function() {
 
     });
 
-    decribe('The menu', function() {
-      
+
+    //MENU Tests
+    describe('The menu', function() {
+
+        it('has a hidden menu by default', function() {
+            const body = document.getElementsByName('body');
+            expect(body).toHaveClass('menu-hidden');
+        });
+
     });
 
 
