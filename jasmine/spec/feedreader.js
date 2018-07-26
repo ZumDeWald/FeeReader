@@ -46,11 +46,29 @@ $(function() {
     //MENU Tests
     describe('The menu', function() {
 
+        const menuHidden = $('body').hasClass('menu-hidden');
+
+        //Check for menu hidden on load
         it('has a hidden menu by default', function() {
-            const body = document.getElementsByName('body');
-            expect(body).toHaveClass('menu-hidden');
+            expect(menuHidden).toBe(true);
         });
 
+        //Set this function to simulate user 'click'
+        beforeEach(function() {
+          menuIcon.trigger('click');
+        })
+
+        //Checks if first 'click' shows menu
+        it('hides menu when icon is clicked', function () {
+            const menuIcon = $('.menu-icon-link');
+            expect(menuHidden).toBe(false);
+          })
+
+          //Checks if second click hides menu again
+        it('shows menu again when icon is clicked second time', function () {
+            const menuIcon = $('.menu-icon-link');
+            expect(menuHidden).toBe(true);
+          })
     });
 
 
@@ -67,6 +85,21 @@ $(function() {
           * should have two expectations: does the menu display when
           * clicked and does it hide when clicked again.
           */
+
+
+    // describe('Initial Entries', function() {
+    //
+    //     beforeEach(function(done) {
+    //       loadFeed(function(){
+    //         done();
+    //       });
+    //     });
+    //
+    //     it('has at least one entry in feed container', function(done) {
+    //
+    //       done();
+    //     })
+    // });
 
     /* TODO: Write a new test suite named "Initial Entries" */
 
