@@ -46,74 +46,85 @@ $(function() {
     //MENU Tests
     describe('The menu', function() {
 
-        const menuHidden = $('body').hasClass('menu-hidden');
+            const menuIcon = $('.menu-icon-link');
 
         //Check for menu hidden on load
         it('has a hidden menu by default', function() {
+            const menuHidden = $('body').hasClass('menu-hidden');
             expect(menuHidden).toBe(true);
         });
 
-        //Set this function to simulate user 'click'
-        beforeEach(function() {
-          menuIcon.trigger('click');
-        })
-
         //Checks if first 'click' shows menu
-        it('hides menu when icon is clicked', function () {
-            const menuIcon = $('.menu-icon-link');
+        it('shows menu when icon is clicked', function () {
+            menuIcon.trigger('click');
+
+            //Get current state of class
+            const menuHidden = $('body').hasClass('menu-hidden');
+
             expect(menuHidden).toBe(false);
           })
 
           //Checks if second click hides menu again
-        it('shows menu again when icon is clicked second time', function () {
-            const menuIcon = $('.menu-icon-link');
+        it('hides menu again when icon is clicked second time', function () {
+            menuIcon.trigger('click');
+
+            //Get current state of class
+            const menuHidden = $('body').hasClass('menu-hidden');
+
             expect(menuHidden).toBe(true);
           })
     });
 
 
-    /* TODO: Write a new test suite named "The menu" */
 
-        /* TODO: Write a test that ensures the menu element is
-         * hidden by default. You'll have to analyze the HTML and
-         * the CSS to determine how we're performing the
-         * hiding/showing of the menu element.
-         */
+    //Entries Tests
+    describe("Initial Entries", function() {
 
-         /* TODO: Write a test that ensures the menu changes
-          * visibility when the menu icon is clicked. This test
-          * should have two expectations: does the menu display when
-          * clicked and does it hide when clicked again.
-          */
+        //Wait for Feed to be built
+        beforeEach(function(done) {
+          setTimeout(function() {
+            init();
+            done();
+          }, 500);
+        });
+
+        it('has at least one entry in feed container', function(done) {
+            const feedContents = $('.feed').children().length;
+
+            expect(feedContents).toBeGreaterThan(0);
+            done();
+        })
+
+    })
 
 
-    // describe('Initial Entries', function() {
-    //
-    //     beforeEach(function(done) {
-    //       loadFeed(function(){
-    //         done();
-    //       });
-    //     });
-    //
-    //     it('has at least one entry in feed container', function(done) {
-    //
-    //       done();
-    //     })
-    // });
+    //New Feed Tests
+    describe("New Feed Selection", function() {
 
-    /* TODO: Write a new test suite named "Initial Entries" */
+        //Wait for Feed to load
+        beforeEach(function(done) {
+          setTimeout(function() {
+            init();
+            done();
+          }, 1000);
+        });
 
-        /* TODO: Write a test that ensures when the loadFeed
-         * function is called and completes its work, there is at least
-         * a single .entry element within the .feed container.
-         * Remember, loadFeed() is asynchronous so this test will require
-         * the use of Jasmine's beforeEach and asynchronous done() function.
-         */
+        it('updates content when new feed is loaded', function(done) {
+            //Gets value of first Feed Entry BEFORE click
+            const feedChildPre = $('.feed:first-child');
 
-    /* TODO: Write a new test suite named "New Feed Selection" */
+            const firstFeed = $('.feed-list:first-child');
 
-        /* TODO: Write a test that ensures when a new feed is loaded
-         * by the loadFeed function that the content actually changes.
-         * Remember, loadFeed() is asynchronous.
-         */
+            //Triggers 'click' on new Feed
+            firstFeed.trigger('click');
+
+            //Gets NEW value of first Feed Entry
+            const feedChildPost = $('.feed:first-child');
+
+            expect(feedChildPre).not.toBe(feedChildPost);
+
+            done();
+        })
+      })
+
 }());
