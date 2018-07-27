@@ -106,7 +106,7 @@ $(function() {
           setTimeout(function() {
             init();
             done();
-          }, 1000);
+          }, 2000);
         });
 
         it('updates content when new feed is loaded', function(done) {
