@@ -1,9 +1,3 @@
-# Project Overview
-
-In this project you are given a web-based application that reads RSS feeds. The original developer of this application clearly saw the value in testing, they've already included [Jasmine](http://jasmine.github.io/) and even started writing their first test suite! Unfortunately, they decided to move on to start their own company and we're now left with an application with an incomplete test suite. That's where you come in.
-
-21. Write a README file detailing all steps required to successfully run the application. If you have added additional tests (for Udacious Test Coverage),  provide documentation for what these future features are and what the tests are checking for.
-
 # Feed Reader Project
 
 * This Feed Reader was created by Udacity for testing purposes. It includes the Jasmine testing framework to perform automated testing.
