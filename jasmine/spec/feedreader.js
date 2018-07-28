@@ -54,24 +54,15 @@ $(function() {
             expect(menuHidden).toBe(true);
         });
 
-        //Checks if first 'click' shows menu
-        it('shows menu when icon is clicked', function () {
+        //Checks if Menu shows/hides with click
+        it('shows/hides menu as expected', function () {
+            //First Click
             menuIcon.trigger('click');
+            expect($('body').hasClass('menu-hidden')).toBe(false);
 
-            //Get current state of class
-            const menuHidden = $('body').hasClass('menu-hidden');
-
-            expect(menuHidden).toBe(false);
-          })
-
-          //Checks if second click hides menu again
-        it('hides menu again when icon is clicked second time', function () {
+            //Second Click
             menuIcon.trigger('click');
-
-            //Get current state of class
-            const menuHidden = $('body').hasClass('menu-hidden');
-
-            expect(menuHidden).toBe(true);
+            expect($('body').hasClass('menu-hidden')).toBe(true);
           })
     });
 
@@ -80,50 +71,36 @@ $(function() {
     //Entries Tests
     describe("Initial Entries", function() {
 
-        //Wait for Feed to be built
+        //Call loadFeed function before Spec
         beforeEach(function(done) {
-          setTimeout(function() {
-            init();
-            done();
-          }, 500);
+            loadFeed(0, done);
         });
 
-        it('has at least one entry in feed container', function(done) {
+        it('has at least one entry in feed container', function() {
             const feedContents = $('.feed').children().length;
-
             expect(feedContents).toBeGreaterThan(0);
-            done();
         })
 
     })
 
 
     //New Feed Tests
-    describe("New Feed Selection", function() {
+    describe("New Feed Selection", function(done) {
 
-        //Wait for Feed to load
+        let feedOriginal = '';
+        let feedNew = ''
+
         beforeEach(function(done) {
-          setTimeout(function() {
-            init();
-            done();
-          }, 2000);
+            loadFeed(0, () => {
+              feedOriginal = $('.feed').html();
+              loadFeed(1, done);
+            });
         });
 
-        it('updates content when new feed is loaded', function(done) {
-            //Gets value of first Feed Entry BEFORE click
-            const feedChildPre = $('.feed:first-child');
-
-            const firstFeed = $('.feed-list:first-child');
-
-            //Triggers 'click' on new Feed
-            firstFeed.trigger('click');
-
-            //Gets NEW value of first Feed Entry
-            const feedChildPost = $('.feed:first-child');
-
-            expect(feedChildPre).not.toBe(feedChildPost);
-
-            done();
+        //Compare 2 contents above to see if they match
+        it('updates content when new feed is loaded', function() {
+            feedNew = $('.feed').html();
+            expect(feedOriginal).not.toEqual(feedNew);
         })
       })
 
